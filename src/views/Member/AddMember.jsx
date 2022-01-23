@@ -22,22 +22,26 @@ const AddMember = () => {
         if (location.pathname == '/add-member') {
             axios.post(URI + 'add-new-member', values)
                 .then(resp => {
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'New member created successfully',
-                        icon: 'success'
-                    })
+                    if (resp.data.status == 200) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'New member created successfully',
+                            icon: 'success'
+                        })
+                    }
                 })
         } else {
             values.plot_no = params.plotId;
             values.file_no = params.fileNo;
             axios.post(URI + 'add-new-plot-member', values)
                 .then(resp => {
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'New member added successfully',
-                        icon: 'success'
-                    })
+                    if (resp.data.status == 200) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'New member added successfully',
+                            icon: 'success'
+                        })
+                    }
                 })
         }
     }
@@ -90,7 +94,7 @@ const AddMember = () => {
                         <Form.Item
                             label="Plot Number"
                             name="plot_number"
-                            // initialValue={addMember == true && ''}
+                        // initialValue={addMember == true && ''}
                         >
                             <Input />
                         </Form.Item>
@@ -98,7 +102,7 @@ const AddMember = () => {
                             label="Volume No"
                             name="file_number"
                             rules={[{ required: true, message: 'Please input Volume No.' }]}
-                            // initialValue={addMember == true && ''}
+                        // initialValue={addMember == true && ''}
                         >
                             <Input />
                         </Form.Item>
