@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd'
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { URI } from '../../helper'
@@ -8,6 +8,15 @@ import { URI } from '../../helper'
 const AddMember = () => {
     const params = useParams();
     const location = useLocation();
+    const [addMember, setAddMember] = useState(Boolean);
+
+    useEffect(() => {
+        if (location.pathname == '/add-member') {
+            setAddMember(true)
+        } else {
+            setAddMember(false)
+        }
+    }, [location, addMember])
 
     function onFinish(values) {
         if (location.pathname == '/add-member') {
@@ -36,7 +45,7 @@ const AddMember = () => {
     return (
         <div>
             {
-                location.pathname == '/add-member' ?
+                addMember == true ?
                     <h5>Add Member</h5> :
                     <h5>Add Plot Member</h5>
             }
@@ -54,13 +63,13 @@ const AddMember = () => {
                     <Input />
                 </Form.Item>
                 {
-                    location.pathname.includes('/add-plot-member') &&
+                    addMember == false &&
                     <>
                         <Form.Item
                             label="Plot Number"
                             name="plot_no"
                             rules={[{ required: true, message: 'Please input Plot No.' }]}
-                            initialValue={params.plotId}
+                            initialValue={addMember == false && params.plotId}
                         >
                             <Input />
                         </Form.Item>
@@ -69,26 +78,27 @@ const AddMember = () => {
                             label="Volume Number"
                             name="file_no"
                             rules={[{ required: true, message: 'Please input Volume No.' }]}
-                            initialValue={params.fileNo}
+                            initialValue={addMember == false && params.fileNo}
                         >
                             <Input />
                         </Form.Item>
                     </>
                 }
                 {
-                    location.pathname == '/add-member' &&
+                    addMember == true &&
                     <>
                         <Form.Item
-                            label="Volume No"
-                            name="file_no"
-                            rules={[{ required: true, message: 'Please input Volume No.' }]}
+                            label="Plot Number"
+                            name="plot_number"
+                            // initialValue={addMember == true && ''}
                         >
                             <Input />
                         </Form.Item>
-
                         <Form.Item
-                            label="Plot Number"
-                            name="plot_no"
+                            label="Volume No"
+                            name="file_number"
+                            rules={[{ required: true, message: 'Please input Volume No.' }]}
+                            // initialValue={addMember == true && ''}
                         >
                             <Input />
                         </Form.Item>
