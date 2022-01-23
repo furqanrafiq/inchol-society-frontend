@@ -18,8 +18,9 @@ function App() {
         <Route path='/' element={<Member />}>
           <Route path="member-dashboard" element={<MemberDashboard />} />
           <Route path="all-members" element={<AllMembers />} />
-          <Route path="add-plot-member/:plotId" element={<AddMember />} />
-          <Route path="update-member" element={<UpdateMember />} />
+          <Route path="add-member" element={<AddMember />} />
+          <Route path="add-plot-member/:plotId/:fileNo" element={<AddMember />} />
+          <Route path="update-member/:memberNo" element={<UpdateMember />} />
           <Route path="all-plots" element={<AllPlots />} />
           <Route path="add-plot" element={<AddPlots />} />
           <Route path="update-plot" element={<UpdatePlot />} />

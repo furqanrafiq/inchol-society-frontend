@@ -1,23 +1,45 @@
 import { Button, Form, Input } from 'antd'
 import axios from 'axios'
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { URI } from '../../helper'
 
 const AddMember = () => {
     const params = useParams();
+    const location = useLocation();
 
     function onFinish(values) {
-        values.plot_no = params.plotId;
-        axios.post(URI + 'add-new-plot-member', values)
-            .then(resp => {
-                console.log(resp)
-            })
+        if (location.pathname == '/add-member') {
+            axios.post(URI + 'add-new-member', values)
+                .then(resp => {
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'New member created successfully',
+                        icon: 'success'
+                    })
+                })
+        } else {
+            values.plot_no = params.plotId;
+            values.file_no = params.fileNo;
+            axios.post(URI + 'add-new-plot-member', values)
+                .then(resp => {
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'New member added successfully',
+                        icon: 'success'
+                    })
+                })
+        }
     }
 
     return (
         <div>
-            <h5>Add Plot Member</h5>
+            {
+                location.pathname == '/add-member' ?
+                    <h5>Add Member</h5> :
+                    <h5>Add Plot Member</h5>
+            }
             <Form
                 name="add-member-form"
                 layout='vertical'
@@ -31,8 +53,49 @@ const AddMember = () => {
                 >
                     <Input />
                 </Form.Item>
+                {
+                    location.pathname.includes('/add-plot-member') &&
+                    <>
+                        <Form.Item
+                            label="Plot Number"
+                            name="plot_no"
+                            rules={[{ required: true, message: 'Please input Plot No.' }]}
+                            initialValue={params.plotId}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Volume Number"
+                            name="file_no"
+                            rules={[{ required: true, message: 'Please input Volume No.' }]}
+                            initialValue={params.fileNo}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </>
+                }
+                {
+                    location.pathname == '/add-member' &&
+                    <>
+                        <Form.Item
+                            label="Volume No"
+                            name="file_no"
+                            rules={[{ required: true, message: 'Please input Volume No.' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Plot Number"
+                            name="plot_no"
+                        >
+                            <Input />
+                        </Form.Item>
+                    </>
+                }
                 <Form.Item
-                    label="Name"
+                    label="Name/Allottee"
                     name="name"
                     rules={[{ required: true, message: 'Please input Name' }]}
                 >
@@ -41,13 +104,6 @@ const AddMember = () => {
                 <Form.Item
                     label="Relation"
                     name="relation"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="File No."
-                    name="file_no"
-                    rules={[{ required: true, message: 'Please input Name' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -72,12 +128,6 @@ const AddMember = () => {
                 <Form.Item
                     label="Cell"
                     name="cell"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Plot Number"
-                    name="plot_no"
                 >
                     <Input />
                 </Form.Item>

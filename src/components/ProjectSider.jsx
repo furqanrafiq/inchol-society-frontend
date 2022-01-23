@@ -18,9 +18,9 @@ const MemberSider = () => {
     return (
         <div>
             <Layout className='left-sider'>
-                <Header className="header" style={{display:'flex',alignItems:'center'}}>
+                <Header className="header" style={{ display: 'flex', alignItems: 'center' }}>
                     <div className="logo" />
-                    <h3 style={{color:'white'}}>Ancholi Society</h3>
+                    <h3 style={{ color: 'white' }}>Inchauli Society</h3>
                     {/* <Menu theme="light" mode="horizontal">
                         <Menu.Item key="1">nav 1</Menu.Item>
                         <Menu.Item key="2">nav 2</Menu.Item>
@@ -48,22 +48,27 @@ const MemberSider = () => {
                                 </Menu.Item>
                             </SubMenu> */}
                             {/* <SubMenu key="/plot" icon={<LaptopOutlined />} title="Plots"> */}
-                                {/* <Menu.Item key="/plot-dashboard">
+                            {/* <Menu.Item key="/plot-dashboard">
                                     <NavLink to="/plot-dashboard">
                                         Dashboard
                                     </NavLink>
                                 </Menu.Item> */}
-                                <Menu.Item key="/">
-                                    <NavLink to="/">
-                                        Dashboard
-                                    </NavLink>
-                                </Menu.Item>
-                                <Menu.Item key="/all-plots">
-                                    <NavLink to="/all-plots">
-                                        All plots
-                                    </NavLink>
-                                </Menu.Item>
-                                {/* <Menu.Item key="/add-plot">
+                            <Menu.Item key="/">
+                                <NavLink to="/">
+                                    Dashboard
+                                </NavLink>
+                            </Menu.Item>
+                            <Menu.Item key="/all-plots">
+                                <NavLink to="/all-plots">
+                                    All plots
+                                </NavLink>
+                            </Menu.Item>
+                            <Menu.Item key="/add-member">
+                                <NavLink to="/add-member">
+                                    Add member
+                                </NavLink>
+                            </Menu.Item>
+                            {/* <Menu.Item key="/add-plot">
                                     <NavLink to="/add-plot">
                                         Add plot
                                     </NavLink>
@@ -89,15 +94,16 @@ const MemberSider = () => {
                                 padding: 24,
                                 margin: 0,
                                 minHeight: 280,
-                                overflowY:'scroll',
-                                scrollBehavior:'smooth'                                
+                                overflowY: 'scroll',
+                                scrollBehavior: 'smooth'
                             }}
                         >
                             <Routes>
                                 <Route path="/" element={<MemberDashboard />} />
                                 <Route path="/all-members" element={<AllMembers />} />
-                                <Route path="add-plot-member/:plotId" element={<AddMember />} />
-                                <Route path="update-member" element={<UpdateMember />} />
+                                <Route path="add-plot-member/:plotId/:fileNo" element={<AddMember />} />
+                                <Route path="add-member" element={<AddMember />} />
+                                <Route path="update-member/:memberNo" element={<UpdateMember />} />
                                 <Route path="all-plots" element={<AllPlots />} />
                                 <Route path="add-plot" element={<AddPlots />} />
                                 <Route path="update-plot" element={<UpdatePlot />} />

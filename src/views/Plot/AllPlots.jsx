@@ -37,8 +37,8 @@ const AllPlots = () => {
     const columns = [
         {
             title: '#',
-            dataIndex: 'id',
-            key: 'id'
+            dataIndex: 'index',
+            key: 'index'
         },
         {
             title: 'Name/Allottee',
@@ -75,8 +75,8 @@ const AllPlots = () => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    {/* <Link to="/update-plot" style={{ color: 'blue' }}><EditOutlined /></Link> */}
-                    <Link to={`/add-plot-member/${record.plot_no}`} style={{ color: 'blue' }}><PlusOutlined /></Link>
+                    <Link to={`/update-member/${record.member_no}`} style={{ color: 'blue' }}><EditOutlined /></Link>
+                    <Link to={`/add-plot-member/${record.plot_no}/${record.file_no}`} style={{ color: 'blue' }}><PlusOutlined /></Link>
                     {/* <a style={{ color: 'red' }}><DeleteOutlined /></a> */}
                 </Space>
             ),
@@ -86,12 +86,13 @@ const AllPlots = () => {
     const data = plots?.map((plot, index) => {
         return (
             {
-                id: index + 1,
+                index: index + 1,
+                id: plot.id,
                 name: plot.name,
-                address: plot.address != '' ? plot.address : '-',
+                address: (plot.address != '' || plot.address != null ) ? plot.address : '-',
                 member_no: plot.member_no,
-                plot_no: plot.plot_no,
-                owner_no: plot.OWNER_NO != '' ? plot.OWNER_NO : '-',
+                plot_no: (plot.plot_no != '' || plot.plot_no != null ) ? plot.plot_no : '-',
+                owner_no: (plot.owner_no != '' || plot.owner_no != null) ? plot.owner_no : '-',
                 file_no: plot.file_no
             }
         )
