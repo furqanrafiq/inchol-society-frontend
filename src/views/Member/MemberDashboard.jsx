@@ -5,7 +5,7 @@ const MemberDashboard = () => {
     return (
         <div>
             {/* <Row gutter={16}> */}
-                <Col span={12}>
+                <Col span={18}>
                     <Card bordered={false} hoverable style={{ background: '#e0f3df', borderRadius: '10px' }}>
                         <div className='row align-items-center'>
                             <div className='col-md-9'>
@@ -19,26 +19,26 @@ const MemberDashboard = () => {
                             <h2 style={{ fontWeight: 'bold' }}>25 acre</h2>
                         </div>
                         <Row gutter={16}>
-                            <Col span={12}>
+                            <Col span={8}>
                                 <Card bordered={false} hoverable style={{ background: '#d5f4f6', borderRadius: '10px' }}>
                                     <div className='row align-items-center'>
                                         <div className='col-md-9'>
-                                            <p style={{ fontSize: '18px', margin: '0px' }}>Residential Plots</p>
+                                            <p style={{ fontSize: '16px', margin: '0px' }}>Residential Plots</p>
                                         </div>
                                         <div className='col-md-3'>
                                             <HomeOutlined style={{ fontSize: "40px" }} />
                                         </div>
                                     </div>
                                     <div style={{ textAlign: 'center' }}>
-                                        <h2 style={{ fontWeight: 'bold' }}>507</h2>
+                                        <h2 style={{ fontWeight: 'bold' }}>505</h2>
                                     </div>
                                 </Card>
                             </Col>
-                            <Col span={12}>
-                                <Card bordered={false} hoverable style={{ background: '#ffe5e4', borderRadius: '10px' }}>
+                            <Col span={8}>
+                                <Card bordered={false} hoverable style={{ background: '#ffe5e4 ', borderRadius: '10px' }}>
                                     <div className='row align-items-center'>
                                         <div className='col-md-9'>
-                                            <p style={{ fontSize: '18px', margin: '0px' }}>Commercial Plots</p>
+                                            <p style={{ fontSize: '16px', margin: '0px',whiteSpace:"nowrap" }}>Commercial Plots</p>
                                         </div>
                                         <div className='col-md-3'>
                                             <HomeOutlined style={{ fontSize: "40px" }} />
@@ -46,6 +46,21 @@ const MemberDashboard = () => {
                                     </div>
                                     <div style={{ textAlign: 'center' }}>
                                         <h2 style={{ fontWeight: 'bold' }}>17</h2>
+                                    </div>
+                                </Card>
+                            </Col>
+                            <Col span={8}>
+                                <Card bordered={false} hoverable style={{ background: 'rgb(255 254 228)', borderRadius: '10px' }}>
+                                    <div className='row align-items-center'>
+                                        <div className='col-md-9'>
+                                            <p style={{ fontSize: '16px', margin: '0px' }}>Flats</p>
+                                        </div>
+                                        <div className='col-md-3'>
+                                            <HomeOutlined style={{ fontSize: "40px" }} />
+                                        </div>
+                                    </div>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <h2 style={{ fontWeight: 'bold' }}>2</h2>
                                     </div>
                                 </Card>
                             </Col>

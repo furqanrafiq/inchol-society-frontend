@@ -10,6 +10,7 @@ import MemberDashboard from './views/Member/MemberDashboard';
 import AllPlots from './views/Plot/AllPlots';
 import AddPlots from './views/Plot/AddPlots';
 import UpdatePlot from './views/Plot/UpdatePlot';
+import Ledgers from './views/Ledgers';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="all-plots" element={<AllPlots />} />
           <Route path="add-plot" element={<AddPlots />} />
           <Route path="update-plot" element={<UpdatePlot />} />
+          <Route path="ledger" element={<Ledgers />} />
         </Route>
       </Routes>
     </div>

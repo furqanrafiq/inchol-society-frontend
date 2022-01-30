@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { URI } from '../../helper'
+import debounce from "lodash.debounce";
 
 const AddMember = () => {
     const params = useParams();
     const location = useLocation();
     const [addMember, setAddMember] = useState(Boolean);
+    const [memberError, setMemberError] = useState(Boolean);
 
     useEffect(() => {
         if (location.pathname == '/add-member') {
@@ -46,6 +48,22 @@ const AddMember = () => {
         }
     }
 
+    const searchMemberNumber = debounce((e) => {
+        axios.get(URI + `search-member-number`, {
+            params: {
+                member_no: e
+            }
+        })
+            .then(resp => {
+                if (resp.status == 200) {
+                    setMemberError(false)
+                } else {
+                    setMemberError(true)
+                }
+            });
+    }, 500);
+
+
     return (
         <div>
             {
@@ -63,9 +81,14 @@ const AddMember = () => {
                     label="Member No"
                     name="member_no"
                     rules={[{ required: true, message: 'Please input Member No.' }]}
+                    onChange={(e) => searchMemberNumber(e.target.value)}
                 >
                     <Input />
                 </Form.Item>
+                    {
+                        memberError == true &&
+                        <p style={{ color: 'red' }}>Member Number already exists!</p>
+                    }
                 {
                     addMember == false &&
                     <>
@@ -77,7 +100,6 @@ const AddMember = () => {
                         >
                             <Input />
                         </Form.Item>
-
                         <Form.Item
                             label="Volume Number"
                             name="file_no"
@@ -128,6 +150,12 @@ const AddMember = () => {
                     <Input />
                 </Form.Item>
                 <Form.Item
+                    label="CNIC"
+                    name="cnic"
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
                     label="Mobile Number"
                     name="mobile"
                 >
@@ -157,7 +185,7 @@ const AddMember = () => {
                 >
                     <Input />
                 </Form.Item>
-                <Button htmlType='submit' type="primary">
+                <Button htmlType='submit' type="primary" disabled={memberError == true}>
                     Submit
                 </Button>
             </Form>

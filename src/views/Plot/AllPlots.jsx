@@ -4,9 +4,10 @@ import {
     EditOutlined,
     LoadingOutlined,
     DeleteOutlined,
-    PlusOutlined
+    PlusOutlined,
+    DollarOutlined
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { URI } from '../../helper';
 import { Spin } from 'antd';
@@ -41,6 +42,21 @@ const AllPlots = () => {
             key: 'index'
         },
         {
+            title: 'Volume No.',
+            dataIndex: 'file_no',
+            key: 'file_no',
+        },
+        {
+            title: 'Plot No.',
+            dataIndex: 'plot_no',
+            key: 'plot_no',
+        },
+        {
+            title: 'Membership No.',
+            dataIndex: 'member_no',
+            key: 'member_no',
+        },
+        {
             title: 'Name/Allottee',
             dataIndex: 'name',
             key: 'name',
@@ -51,34 +67,25 @@ const AllPlots = () => {
             key: 'address',
         },
         {
-            title: 'Membership No.',
-            dataIndex: 'member_no',
-            key: 'member_no',
-        },
-        {
-            title: 'Plot No.',
-            dataIndex: 'plot_no',
-            key: 'plot_no',
-        },
-        {
             title: 'Owner No.',
             dataIndex: 'owner_no',
             key: 'owner_no',
         },
         {
-            title: 'Volume No.',
-            dataIndex: 'file_no',
-            key: 'file_no',
-        },
-        {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
+                // record.owner_no == 'Current' ?
                 <Space size="middle">
                     <Link to={`/update-member/${record.member_no}`} style={{ color: 'blue' }}><EditOutlined /></Link>
                     <Link to={`/add-plot-member/${record.plot_no}/${record.file_no}`} style={{ color: 'blue' }}><PlusOutlined /></Link>
+                    <Link to={`/ledger?plot_no=${record.plot_no}&volume_no=${record.file_no}&membership_no=${record.member_no}`}>
+                        <DollarOutlined style={{ color: 'blue' }} />
+                    </Link>
                     {/* <a style={{ color: 'red' }}><DeleteOutlined /></a> */}
                 </Space>
+                // :
+                // '-'
             ),
         },
     ];
@@ -89,9 +96,9 @@ const AllPlots = () => {
                 index: index + 1,
                 id: plot.id,
                 name: plot.name,
-                address: (plot.address != '' || plot.address != null ) ? plot.address : '-',
+                address: (plot.address != '' || plot.address != null) ? plot.address : '-',
                 member_no: plot.member_no,
-                plot_no: (plot.plot_no != '' || plot.plot_no != null ) ? plot.plot_no : '-',
+                plot_no: (plot.plot_no != '' || plot.plot_no != null) ? plot.plot_no : '-',
                 owner_no: (plot.owner_no != '' || plot.owner_no != null) ? plot.owner_no : '-',
                 file_no: plot.file_no
             }
