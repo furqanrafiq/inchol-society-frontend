@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
@@ -74,122 +74,159 @@ const AddMember = () => {
             <Form
                 name="add-member-form"
                 layout='vertical'
-                className='w-25'
+                className='w-50'
                 onFinish={onFinish}
             >
-                <Form.Item
-                    label="Member No"
-                    name="member_no"
-                    rules={[{ required: true, message: 'Please input Member No.' }]}
-                    onChange={(e) => searchMemberNumber(e.target.value)}
-                >
-                    <Input />
-                </Form.Item>
-                    {
-                        memberError == true &&
-                        <p style={{ color: 'red' }}>Member Number already exists!</p>
-                    }
-                {
-                    addMember == false &&
-                    <>
+                <Row className='justify-content-between gap-4'>
+                    <Col md={11}>
                         <Form.Item
-                            label="Plot Number"
-                            name="plot_no"
-                            rules={[{ required: true, message: 'Please input Plot No.' }]}
-                            initialValue={addMember == false && params.plotId}
+                            label="Member No"
+                            name="member_no"
+                            rules={[{ required: true, message: 'Please input Member No.' }]}
+                            onChange={(e) => searchMemberNumber(e.target.value)}
+                        >
+                            <Input />
+                        </Form.Item>
+                        {
+                            memberError == true &&
+                            <p style={{ color: 'red' }}>Member Number already exists!</p>
+                        }
+                        {
+                            addMember == false &&
+                            <>
+                                <Form.Item
+                                    label="Plot Number"
+                                    name="plot_no"
+                                    rules={[{ required: true, message: 'Please input Plot No.' }]}
+                                    initialValue={addMember == false && params.plotId}
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Volume Number"
+                                    name="file_no"
+                                    rules={[{ required: true, message: 'Please input Volume No.' }]}
+                                    initialValue={addMember == false && params.fileNo}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </>
+                        }
+                        {
+                            addMember == true &&
+                            <>
+                                <Form.Item
+                                    label="Plot Number"
+                                    name="plot_number"
+                                // initialValue={addMember == true && ''}
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Volume No"
+                                    name="file_number"
+                                    rules={[{ required: true, message: 'Please input Volume No.' }]}
+                                // initialValue={addMember == true && ''}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </>
+                        }
+                        <Form.Item
+                            label="Name/Allottee"
+                            name="name"
+                            rules={[{ required: true, message: 'Please input Name' }]}
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Volume Number"
-                            name="file_no"
-                            rules={[{ required: true, message: 'Please input Volume No.' }]}
-                            initialValue={addMember == false && params.fileNo}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </>
-                }
-                {
-                    addMember == true &&
-                    <>
-                        <Form.Item
-                            label="Plot Number"
-                            name="plot_number"
-                        // initialValue={addMember == true && ''}
+                            label="Relation"
+                            name="relation"
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Volume No"
-                            name="file_number"
-                            rules={[{ required: true, message: 'Please input Volume No.' }]}
-                        // initialValue={addMember == true && ''}
+                            label="Address"
+                            name="address"
                         >
                             <Input />
                         </Form.Item>
-                    </>
-                }
-                <Form.Item
-                    label="Name/Allottee"
-                    name="name"
-                    rules={[{ required: true, message: 'Please input Name' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Relation"
-                    name="relation"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Address"
-                    name="address"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="CNIC"
-                    name="cnic"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Mobile Number"
-                    name="mobile"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Email"
-                    name="email"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Cell"
-                    name="cell"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Plot Size"
-                    name="plot_size"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Plot Type"
-                    name="plot_type"
-                >
-                    <Input />
-                </Form.Item>
-                <Button htmlType='submit' type="primary" disabled={memberError == true}>
-                    Submit
-                </Button>
+                        <Form.Item
+                            label="CNIC"
+                            name="cnic"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Mobile Number"
+                            name="mobile"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Cell"
+                            name="cell"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Plot Size"
+                            name="plot_size"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Plot Type"
+                            name="plot_type"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Button htmlType='submit' type="primary" disabled={memberError == true}>
+                            Submit
+                        </Button>
+                    </Col>
+                    <Col md={11}>
+                        <Form.Item
+                            label="Date"
+                            name="Date"
+                            rules={[{ required: true, message: 'Please input Date' }]}
+                        >
+                            <DatePicker format={'DD-MM-YYYY'} className="w-100"/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Receipt"
+                            name="Receipt"
+                            rules={[{ required: true, message: 'Please input Receipt' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Description"
+                            name="Description"
+                            rules={[{ required: true, message: 'Please input Description' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Amount"
+                            name="Amount"
+                            rules={[{ required: true, message: 'Please input Amount' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
             </Form>
-        </div>
+        </div >
     )
 }
 

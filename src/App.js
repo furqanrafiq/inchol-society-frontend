@@ -11,6 +11,8 @@ import AllPlots from './views/Plot/AllPlots';
 import AddPlots from './views/Plot/AddPlots';
 import UpdatePlot from './views/Plot/UpdatePlot';
 import Ledgers from './views/Ledgers';
+import UpdateLedger from './views/UpdateLedger';
+import AddLedger from './views/AddLedger';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path="add-plot" element={<AddPlots />} />
           <Route path="update-plot" element={<UpdatePlot />} />
           <Route path="ledger" element={<Ledgers />} />
+          <Route path="update-ledger/:ledgerId" element={<UpdateLedger />} />
+          <Route path="add-ledger" element={<AddLedger />} />
         </Route>
       </Routes>
     </div>

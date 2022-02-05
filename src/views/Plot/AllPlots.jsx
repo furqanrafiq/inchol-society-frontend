@@ -105,13 +105,6 @@ const AllPlots = () => {
         )
     })
 
-    // const onSearchByName = value => {
-    //     let filteredPlots = plots.filter(plot => {
-    //         return (plot.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
-    //     })
-    //     setFilteredPlots(filteredPlots)
-    // }
-
     const onSearchByName = debounce((e) => {
         if (e != '') {
             axios.get(URI + `get-by-member-name`, {

@@ -10,6 +10,8 @@ import AllPlots from '../views/Plot/AllPlots';
 import AddPlots from '../views/Plot/AddPlots';
 import UpdatePlot from '../views/Plot/UpdatePlot';
 import Ledgers from '../views/Ledgers';
+import UpdateLedger from '../views/UpdateLedger';
+import AddLedger from '../views/AddLedger';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -64,6 +66,11 @@ const MemberSider = () => {
                                     All plots
                                 </NavLink>
                             </Menu.Item>
+                            <Menu.Item key="/all-members">
+                                <NavLink to="/all-members">
+                                    All members
+                                </NavLink>
+                            </Menu.Item>
                             <Menu.Item key="/add-member">
                                 <NavLink to="/add-member">
                                     Add member
@@ -114,6 +121,8 @@ const MemberSider = () => {
                                 <Route path="add-plot" element={<AddPlots />} />
                                 <Route path="update-plot" element={<UpdatePlot />} />
                                 <Route path="ledger" element={<Ledgers />} />
+                                <Route path="update-ledger/:ledgerId" element={<UpdateLedger />} />
+                                <Route path="add-ledger" element={<AddLedger />} />
                             </Routes>
                         </Content>
                     </Layout>
