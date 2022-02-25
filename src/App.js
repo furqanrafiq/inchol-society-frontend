@@ -13,6 +13,7 @@ import UpdatePlot from './views/Plot/UpdatePlot';
 import Ledgers from './views/Ledgers';
 import UpdateLedger from './views/UpdateLedger';
 import AddLedger from './views/AddLedger';
+import AllNph from './views/Member/AllNph';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="ledger" element={<Ledgers />} />
           <Route path="update-ledger/:ledgerId" element={<UpdateLedger />} />
           <Route path="add-ledger" element={<AddLedger />} />
+          <Route path="all-nph" element={<AllNph />} />
         </Route>
       </Routes>
     </div>

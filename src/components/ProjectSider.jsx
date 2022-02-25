@@ -12,6 +12,7 @@ import UpdatePlot from '../views/Plot/UpdatePlot';
 import Ledgers from '../views/Ledgers';
 import UpdateLedger from '../views/UpdateLedger';
 import AddLedger from '../views/AddLedger';
+import AllNph from '../views/Member/AllNph';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -71,11 +72,18 @@ const MemberSider = () => {
                                     All members
                                 </NavLink>
                             </Menu.Item>
-                            <Menu.Item key="/add-member">
-                                <NavLink to="/add-member">
-                                    Add member
-                                </NavLink>
-                            </Menu.Item>
+                            <SubMenu key="nph" title="Non Plot Holder">
+                                <Menu.Item key="5">
+                                    <NavLink to="/all-nph">
+                                        View all
+                                    </NavLink>
+                                </Menu.Item>
+                                <Menu.Item key="/add-member">
+                                    <NavLink to="/add-member">
+                                        Add new
+                                    </NavLink>
+                                </Menu.Item>
+                            </SubMenu>
                             <Menu.Item key="/ledger">
                                 <NavLink to="/ledger">
                                     Ledger
@@ -123,6 +131,7 @@ const MemberSider = () => {
                                 <Route path="ledger" element={<Ledgers />} />
                                 <Route path="update-ledger/:ledgerId" element={<UpdateLedger />} />
                                 <Route path="add-ledger" element={<AddLedger />} />
+                                <Route path="all-nph" element={<AllNph />} />
                             </Routes>
                         </Content>
                     </Layout>

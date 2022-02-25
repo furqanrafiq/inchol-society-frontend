@@ -3,11 +3,15 @@ import { Button, DatePicker, Form, Input, Radio } from 'antd'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { URI } from '../helper';
+import { useParams } from 'react-router-dom';
 
 const AddLedger = () => {
     const [ledger, setLedger] = useState();
+    const params = useParams()
 
     function onFinish(values) {
+        // values.plot_no = params.plotNo;
+        // values.file_no = params.fileNo;
         axios.post(URI + 'add-ledger', values)
             .then(resp => {
                 if (resp.data.status == 200) {
@@ -41,6 +45,7 @@ const AddLedger = () => {
                     label="Plot Number"
                     name="plot_no"
                     rules={[{ required: true, message: 'Please input Plot number' }]}
+                    // initialValue={params.plotNo}
                 >
                     <Input onChange={(e) => handleLedger('plot_no', e.target.value)} />
                 </Form.Item>
@@ -48,6 +53,7 @@ const AddLedger = () => {
                     label="Volume Number"
                     name="file_no"
                     rules={[{ required: true, message: 'Please input Volume Number' }]}
+                    // initialValue={params.fileNo}
                 >
                     <Input onChange={(e) => handleLedger('volume_no', e.target.value)} />
                 </Form.Item>

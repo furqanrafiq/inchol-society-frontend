@@ -17,7 +17,7 @@ import { useEffect } from 'react/cjs/react.development';
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Search } = Input;
 
-const AllMembers = () => {
+const AllNph = () => {
 
     const [plots, setPlots] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ const AllMembers = () => {
 
     function getAllPlots() {
         setLoading(true)
-        axios.get(URI + `get-all-plots`)
+        axios.get(URI + `get-all-nph-holders`)
             .then(resp => {
                 setPlots(resp.data.response.detail);
                 setLoading(false)
@@ -47,6 +47,11 @@ const AllMembers = () => {
             title: 'Member No.',
             dataIndex: 'member_no',
             key: 'member_no',
+        },
+        {
+            title: 'Volume No.',
+            dataIndex: 'file_no',
+            key: 'file_no',
         },
         {
             title: 'Name/Allottee',
@@ -98,6 +103,7 @@ const AllMembers = () => {
             {
                 index: index + 1,
                 name: plot.name,
+                file_no: plot.file_no,
                 address: (plot.address != '' || plot.address != null) ? plot.address : '-',
                 cnic: plot.cnic,
                 cell: (plot.cell != '' || plot.cell != null) ? plot.cell : '-',
@@ -207,4 +213,4 @@ const AllMembers = () => {
     )
 }
 
-export default AllMembers
+export default AllNph

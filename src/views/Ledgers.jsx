@@ -22,6 +22,8 @@ const Ledgers = () => {
     const [memberDetails, setMemberDetails] = useState()
     const [financeDetails, setFinanceDetails] = useState()
     const [totalAmount, setTotalAmount] = useState()
+    const [lastItem, setLastItem] = useState();
+    const [ledgerTotal, setLedgerTotal] = useState();
 
     useEffect(() => {
         if (query.get('plot_no')) {
@@ -60,6 +62,17 @@ const Ledgers = () => {
                 setFinanceDetails(resp.data.response.detail);
             });
     }
+
+    useEffect(() => {
+        if (financeDetails?.length > 0) {
+            var sum = financeDetails?.map(fin => fin.Amount)
+            // setLedgerTotal(financeDetails?.map(fin => fin.Amount))
+            var total = sum.reduce(function (a, b) {
+                return a + b;
+            }, 0);
+            setLedgerTotal(total)
+        }
+    }, [financeDetails])
 
     useEffect(() => {
         getMemberDetails()
@@ -231,6 +244,7 @@ const Ledgers = () => {
                     tempArray.push(resp.data.response.detail.memberDetails)
                     setMemberDetails(tempArray)
                     setFinanceDetails(resp.data.response.detail.financeDetails)
+                    // setLastItem(resp.data.response.detail.financeDetails.pop())
                 });
         }
     }, 500);
@@ -253,15 +267,73 @@ const Ledgers = () => {
                     style={{ width: 200 }}
                     value={volumeNo}
                 />
+            </div>
+            <Table className='mt-3' columns={columns} dataSource={data} />
+            <div className='d-flex align-items-center justify-content-between'>
+                <h5 className='mt-3' style={{ fontWeight: 'bold' }}>Ledger Details</h5>
+
                 <Link to="/add-ledger">
                     <Button>
                         Add New
                     </Button>
                 </Link>
             </div>
-            <Table className='mt-3' columns={columns} dataSource={data} />
-            <h5>Ledger Details</h5>
-            <Table className='mt-3' columns={ledger_columns} dataSource={ledger_data} />
+            {
+                financeDetails?.length > 0 &&
+                <p style={{ fontSize: '18px', fontWeight: '500' }}>Total Amount: {ledgerTotal}</p>
+            }
+            <table class="table mt-3" style={{ background: 'white' }}>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Volume No.</th>
+                        <th scope="col">Plot No.</th>
+                        <th scope="col">Membership No.</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Receipt</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        financeDetails?.map((plot, index) => {
+                            return (
+                                <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{plot.file_no}</td>
+                                    <td>{(plot.plot_no != '' || plot.plot_no != null) ? plot.plot_no : '-'}</td>
+                                    <td>{plot.member_no}</td>
+                                    <td>{plot.Date}</td>
+                                    <td>{plot.Receipt}</td>
+                                    <td>{plot.Description}</td>
+                                    <td>{plot.Amount}</td>
+                                    <td> <Space size="middle">
+                                        <Link to={`/update-ledger/${plot.id}`} style={{ color: 'blue' }}><EditOutlined /></Link>
+                                    </Space></td>
+                                </tr>
+                            )
+                        })
+                    }
+                    {/* <tr>
+                        <th scope="row">-</th>
+                        <td>{lastItem?.file_no}</td>
+                        <td>{(lastItem?.plot_no != '' || lastItem?.plot_no != null) ? lastItem?.plot_no : '-'}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>
+                            <Space size="middle">
+                                <Link to={`/add-ledger/${lastItem?.file_no}/${lastItem?.plot_no}`} style={{ color: 'blue' }}>Add new</Link>
+                            </Space>
+                        </td>
+                    </tr> */}
+                </tbody>
+            </table>
+            {/* <Table className='mt-3' columns={ledger_columns} dataSource={ledger_data} /> */}
         </div>
     )
 };
