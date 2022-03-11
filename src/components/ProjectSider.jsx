@@ -13,6 +13,7 @@ import Ledgers from '../views/Ledgers';
 import UpdateLedger from '../views/UpdateLedger';
 import AddLedger from '../views/AddLedger';
 import AllNph from '../views/Member/AllNph';
+import logo from '../incholi2-01.png'
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -23,7 +24,8 @@ const MemberSider = () => {
         <div>
             <Layout className='left-sider'>
                 <Header className="header" style={{ display: 'flex', alignItems: 'center' }}>
-                    <div className="logo" />
+                    {/* <div className="logo" /> */}
+                    <img src={logo} height="50px" width="50px" />
                     <h3 style={{ color: 'white' }}>Inchauli Society</h3>
                     {/* <Menu theme="light" mode="horizontal">
                         <Menu.Item key="1">nav 1</Menu.Item>

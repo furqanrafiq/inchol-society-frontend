@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Spin, Input, Table, Space, Button } from 'antd';
+import { Spin, Input, Table, Space, Button, Popover } from 'antd';
 import debounce from "lodash.debounce";
 import {
     LoadingOutlined,
@@ -24,6 +24,7 @@ const Ledgers = () => {
     const [totalAmount, setTotalAmount] = useState()
     const [lastItem, setLastItem] = useState();
     const [ledgerTotal, setLedgerTotal] = useState();
+    const [member, setMember] = useState({})
 
     useEffect(() => {
         if (query.get('plot_no')) {
@@ -165,7 +166,7 @@ const Ledgers = () => {
             key: 'receipt',
         },
         {
-            title: 'Description',
+            title: 'Account title',
             dataIndex: 'description',
             key: 'description',
         },
@@ -200,6 +201,16 @@ const Ledgers = () => {
             }
         )
     })
+
+    function getMemberName(member_no) {
+        axios.get(URI + 'get-member-details', {
+            params: {
+                member_no
+            }
+        }).then(resp => {
+            setMember(resp.data.response.detail[0])
+        })
+    }
 
     // useEffect(() => {
     //     if (financeDetails?.length > 0) {
@@ -284,14 +295,14 @@ const Ledgers = () => {
             }
             <table class="table mt-3" style={{ background: 'white' }}>
                 <thead>
-                    <tr>
+                    <tr style={{ textAlign: 'center' }}>
                         <th scope="col">#</th>
                         <th scope="col">Volume No.</th>
                         <th scope="col">Plot No.</th>
                         <th scope="col">Membership No.</th>
                         <th scope="col">Date</th>
                         <th scope="col">Receipt</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Account Title</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -300,11 +311,15 @@ const Ledgers = () => {
                     {
                         financeDetails?.map((plot, index) => {
                             return (
-                                <tr>
+                                <tr style={{ textAlign: 'center' }}>
                                     <th scope="row">{index + 1}</th>
                                     <td>{plot.file_no}</td>
                                     <td>{(plot.plot_no != '' || plot.plot_no != null) ? plot.plot_no : '-'}</td>
-                                    <td>{plot.member_no}</td>
+                                    <Popover content={
+                                        <p>{member?.name}</p>
+                                    }>
+                                        <td onMouseOver={() => getMemberName(plot.member_no)}>{plot.member_no}</td>
+                                    </Popover>
                                     <td>{plot.Date}</td>
                                     <td>{plot.Receipt}</td>
                                     <td>{plot.Description}</td>
