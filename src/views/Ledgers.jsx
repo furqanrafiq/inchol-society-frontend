@@ -9,6 +9,7 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { URI } from '../helper';
 import moment from 'moment'
+import { CSVLink } from 'react-csv';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Search } = Input;
@@ -260,6 +261,17 @@ const Ledgers = () => {
         }
     }, 500);
 
+    const csvHeaders = [
+        { label: "S.No", key: "index" },
+        { label: "Volume No.", key: "file_no" },
+        { label: "Plot No.", key: "plot_no" },
+        { label: "Membership No.", key: "member_no" },
+        { label: "Date", key: "Date" },
+        { label: "Receipt", key: "Receipt" },
+        { label: "Account Title", key: "Description" },
+        { label: "Amount", key: "Amount" }
+    ];
+
     return (
         <div>
             <h5>Ledger</h5>
@@ -282,12 +294,17 @@ const Ledgers = () => {
             <Table className='mt-3' columns={columns} dataSource={data} />
             <div className='d-flex align-items-center justify-content-between'>
                 <h5 className='mt-3' style={{ fontWeight: 'bold' }}>Ledger Details</h5>
+                <div>
+                    <CSVLink headers={csvHeaders} data={financeDetails} filename={'Ledger Data' + moment.now()}>
+                        <Button className="mr-3" style={{color:'white',background:'#28a745',borderColor:'#28a745'}}>Export CSV</Button>
+                    </CSVLink>
 
-                <Link to="/add-ledger">
-                    <Button>
-                        Add New
-                    </Button>
-                </Link>
+                    <Link to="/add-ledger">
+                        <Button>
+                            Add New
+                        </Button>
+                    </Link>
+                </div>
             </div>
             {
                 financeDetails?.length > 0 &&
