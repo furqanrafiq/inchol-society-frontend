@@ -295,7 +295,7 @@ const Ledgers = () => {
             <div className='d-flex align-items-center justify-content-between'>
                 <h5 className='mt-3' style={{ fontWeight: 'bold' }}>Ledger Details</h5>
                 <div>
-                    <CSVLink headers={csvHeaders} data={financeDetails} filename={'Ledger Data' + moment.now()}>
+                    <CSVLink headers={csvHeaders} data={financeDetails != undefined ? financeDetails : ''} filename={'Ledger Data' + moment.now()}>
                         <Button className="mr-3" style={{color:'white',background:'#28a745',borderColor:'#28a745'}}>Export CSV</Button>
                     </CSVLink>
 
