@@ -67,9 +67,7 @@ const Ledgers = () => {
 
     useEffect(() => {
         if (financeDetails?.length > 0) {
-            // var sum = financeDetails?.map(fin => fin.Amount)
             var sum = financeDetails?.map(fin => fin.Amount)
-            // setLedgerTotal(financeDetails?.map(fin => fin.Amount))
             var total = sum.reduce(function (a, b) {
                 return a + b;
             }, 0);
@@ -99,7 +97,7 @@ const Ledgers = () => {
             key: 'plot_no',
         },
         {
-            title: 'Membership No.',
+            title: 'M/S No.',
             dataIndex: 'member_no',
             key: 'member_no',
         },
@@ -136,74 +134,6 @@ const Ledgers = () => {
         )
     })
 
-    const ledger_columns = [
-        {
-            title: '#',
-            dataIndex: 'index',
-            key: 'index'
-        },
-        {
-            title: 'Volume No.',
-            dataIndex: 'file_no',
-            key: 'file_no',
-        },
-        {
-            title: 'Plot No.',
-            dataIndex: 'plot_no',
-            key: 'plot_no',
-        },
-        {
-            title: 'Membership No.',
-            dataIndex: 'member_no',
-            key: 'member_no',
-        },
-        {
-            title: 'Date',
-            dataIndex: 'date',
-            key: 'date',
-        },
-        {
-            title: 'Receipt',
-            dataIndex: 'receipt',
-            key: 'receipt',
-        },
-        {
-            title: 'Account title',
-            dataIndex: 'description',
-            key: 'description',
-        },
-        {
-            title: 'Amount',
-            dataIndex: 'amount',
-            key: 'amount',
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <Link to={`/update-ledger/${record.id}`} style={{ color: 'blue' }}><EditOutlined /></Link>
-                </Space>
-            ),
-        },
-    ];
-
-    const ledger_data = financeDetails?.map((plot, index) => {
-        return (
-            {
-                index: index + 1,
-                id: plot.id,
-                file_no: plot.file_no,
-                member_no: plot.member_no,
-                plot_no: (plot.plot_no != '' || plot.plot_no != null) ? plot.plot_no : '-',
-                date: plot.Date,
-                receipt: plot.Receipt,
-                description: plot.Description,
-                amount: plot.Amount,
-            }
-        )
-    })
-
     function getMemberName(member_no) {
         axios.get(URI + 'get-member-details', {
             params: {
@@ -214,15 +144,18 @@ const Ledgers = () => {
         })
     }
 
-    // useEffect(() => {
-    //     if (financeDetails?.length > 0) {
-    //         let total;
-    //         for (var i = 0; i < financeDetails?.length; i++) {
-    //             total += financeDetails[i].Amount
-    //         }
-    //         console.log(total)
-    //     }
-    // }, [financeDetails])
+    const onChangeDescription = e => {
+        if (e != '') {
+            let filteredFinanceDetails = financeDetails.filter(item => {
+                if (item.Description != null) {
+                    return (item.Description.toLowerCase().indexOf(e.toLowerCase()) !== -1)
+                }
+            })
+            setFinanceDetails(filteredFinanceDetails);
+        } else {
+            getFinanceDetails()
+        }
+    }
 
     function handleFilter(name, value) {
         if (name == 'plot_no') {
@@ -266,7 +199,7 @@ const Ledgers = () => {
         { label: "S.No", key: "index" },
         { label: "Volume No.", key: "file_no" },
         { label: "Plot No.", key: "plot_no" },
-        { label: "Membership No.", key: "member_no" },
+        { label: "M/S No.", key: "member_no" },
         { label: "Date", key: "Date" },
         { label: "Receipt", key: "Receipt" },
         { label: "Account Title", key: "Description" },
@@ -281,23 +214,30 @@ const Ledgers = () => {
                     placeholder="Search by plot number"
                     // onSearch={onSearch}
                     onChange={(e) => { onSearchByPlotNumber('plot_no', e.target.value); handleFilter('plot_no', e.target.value) }}
-                    style={{ width: 200 }}
+                    style={{ width: 250 }}
                     value={plotNo}
                 />
                 <Search
                     placeholder="Search by volume number"
                     // onSearch={onSearch}
                     onChange={(e) => { onSearchByPlotNumber('file_no', e.target.value); handleFilter('file_no', e.target.value) }}
-                    style={{ width: 200 }}
+                    style={{ width: 250 }}
                     value={volumeNo}
                 />
             </div>
             <Table className='mt-3' columns={columns} dataSource={data} />
             <div className='d-flex align-items-center justify-content-between'>
-                <h5 className='mt-3' style={{ fontWeight: 'bold' }}>Ledger Details</h5>
                 <div>
-                    <CSVLink headers={csvHeaders} data={financeDetails != undefined ? financeDetails : ''} filename={'Ledger Data' + moment.now()}>
-                        <Button className="mr-3" style={{color:'white',background:'#28a745',borderColor:'#28a745'}}>Export CSV</Button>
+                    <h5 className='mt-3' style={{ fontWeight: 'bold' }}>Ledger Details</h5>
+                    <Search
+                        placeholder="Search by account title"
+                        onChange={(e) => { onChangeDescription(e.target.value) }}
+                        style={{ width: 250 }}
+                    />
+                </div>
+                <div>
+                    <CSVLink headers={csvHeaders} data={financeDetails != undefined ? financeDetails : ''} filename={'Ledger Data' + moment.now()} title="Inchauli Society">
+                        <Button className="mr-3" style={{ color: 'white', background: '#28a745', borderColor: '#28a745' }}>Export CSV</Button>
                     </CSVLink>
 
                     <Link to="/add-ledger">
@@ -311,13 +251,14 @@ const Ledgers = () => {
                 financeDetails?.length > 0 &&
                 <p style={{ fontSize: '18px', fontWeight: '500' }}>Total Amount: {ledgerTotal}</p>
             }
+
             <table class="table mt-3" style={{ background: 'white' }}>
                 <thead>
                     <tr style={{ textAlign: 'center' }}>
                         <th scope="col">#</th>
                         <th scope="col">Volume No.</th>
                         <th scope="col">Plot No.</th>
-                        <th scope="col">Membership No.</th>
+                        <th scope="col">M/S No.</th>
                         <th scope="col">Date</th>
                         <th scope="col">Receipt</th>
                         <th scope="col">Account Title</th>

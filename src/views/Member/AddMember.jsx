@@ -144,7 +144,7 @@ const AddMember = () => {
                 <Row className='justify-content-between gap-4'>
                     <Col md={11}>
                         <Form.Item
-                            label="Member No"
+                            label="M/S No."
                             name="member_no"
                             rules={[{ required: true, message: 'Please enter Member No.' }]}
                             onChange={(e) => searchMemberNumber(e.target.value)}

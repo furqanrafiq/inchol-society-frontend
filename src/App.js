@@ -14,6 +14,7 @@ import Ledgers from './views/Ledgers';
 import UpdateLedger from './views/UpdateLedger';
 import AddLedger from './views/AddLedger';
 import AllNph from './views/Member/AllNph';
+import MSI from './views/MSI';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="update-ledger/:ledgerId" element={<UpdateLedger />} />
           <Route path="add-ledger" element={<AddLedger />} />
           <Route path="all-nph" element={<AllNph />} />
+          <Route path="msi" element={<MSI />} />
         </Route>
       </Routes>
     </div>

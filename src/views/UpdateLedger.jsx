@@ -1,4 +1,4 @@
-import { Button, Form, Input, Spin } from 'antd';
+import { Button, Form, Input, Spin, Select } from 'antd';
 import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,14 +10,26 @@ import {
 import Swal from 'sweetalert2';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+const { Option } = Select;
+
 const UpdateLedger = () => {
     const params = useParams();
     const [ledgerDetails, setLedgerDetails] = useState()
     const [loading, setLoading] = useState();
+    const [descriptions, setDescriptions] = useState([])
 
     function handleDetails(name, value) {
         setLedgerDetails({ ...ledgerDetails, [name]: value })
     }
+
+    useEffect(() => {
+        axios.get(URI + 'all-descriptions')
+            .then(resp => {
+                if (resp.data.status == 200) {
+                    setDescriptions(resp.data.response.detail)
+                }
+            })
+    }, [])
 
     useEffect(() => {
         setLoading(true)
@@ -71,7 +83,15 @@ const UpdateLedger = () => {
                                 name="Description"
                                 initialValue={ledgerDetails?.Description}
                             >
-                                <Input onChange={(e) => handleDetails('Description', e.target.value)} />
+                                <Select onChange={(e) => handleDetails('Description', e)} className="w-100">
+                                    {
+                                        descriptions?.map(description => {
+                                            return (
+                                                <Option key={description.id} value={description.head_of_account}>{description.head_of_account}</Option>
+                                            )
+                                        })
+                                    }
+                                </Select>
                             </Form.Item>
                             <Form.Item
                                 label="Receipt"

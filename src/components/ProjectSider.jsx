@@ -13,6 +13,7 @@ import Ledgers from '../views/Ledgers';
 import UpdateLedger from '../views/UpdateLedger';
 import AddLedger from '../views/AddLedger';
 import AllNph from '../views/Member/AllNph';
+import MSI from '../views/MSI';
 // import logo from '../incholi2-01.png'
 
 const { SubMenu } = Menu;
@@ -91,6 +92,11 @@ const MemberSider = () => {
                                     Ledger
                                 </NavLink>
                             </Menu.Item>
+                            <Menu.Item key="/msi">
+                                <NavLink to="/msi">
+                                    MSI
+                                </NavLink>
+                            </Menu.Item>
                             {/* <Menu.Item key="/add-plot">
                                     <NavLink to="/add-plot">
                                         Add plot
@@ -134,6 +140,7 @@ const MemberSider = () => {
                                 <Route path="update-ledger/:ledgerId" element={<UpdateLedger />} />
                                 <Route path="add-ledger" element={<AddLedger />} />
                                 <Route path="all-nph" element={<AllNph />} />
+                                <Route path="msi" element={<MSI />} />
                             </Routes>
                         </Content>
                     </Layout>

@@ -44,7 +44,7 @@ const AllNph = () => {
             key: 'index'
         },
         {
-            title: 'Member No.',
+            title: 'M/S No.',
             dataIndex: 'member_no',
             key: 'member_no',
         },
@@ -185,7 +185,7 @@ const AllNph = () => {
                     style={{ width: 200 }}
                 />
                 <Search
-                    placeholder="Search by membership number"
+                    placeholder="Search by M/S No."
                     // onSearch={onSearch}
                     className='w-25'
                     onChange={(e) => onSearchByMembershipNumber(e.target.value)}
