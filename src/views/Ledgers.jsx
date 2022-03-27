@@ -197,7 +197,7 @@ const Ledgers = () => {
 
     const csvHeaders = [
         { label: "S.No", key: "index" },
-        { label: "Volume No.", key: "file_no" },
+        // { label: "Volume No.", key: "file_no" },
         { label: "Plot No.", key: "plot_no" },
         { label: "M/S No.", key: "member_no" },
         { label: "Date", key: "Date" },
