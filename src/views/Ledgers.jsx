@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Spin, Input, Table, Space, Button, Popover } from 'antd';
+import { Spin, Input, Table, Space, Button, Popover, Collapse, Checkbox } from 'antd';
 import debounce from "lodash.debounce";
 import {
     LoadingOutlined,
@@ -13,6 +13,7 @@ import { CSVLink } from 'react-csv';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Search } = Input;
+const { Panel } = Collapse;
 
 const Ledgers = () => {
     const query = new URLSearchParams(useLocation().search);
@@ -205,6 +206,23 @@ const Ledgers = () => {
         { label: "Account Title", key: "Description" },
         { label: "Amount", key: "Amount" }
     ];
+
+    const [memberHeaders, setMemberHeaders] = useState([]);
+
+    const memberOptions = [
+        { label: 'member_no', value: 'M/S No.' },
+        { label: 'file_no', value: 'Volume No.' },
+        { label: 'plot_no', value: 'Plot No.' },
+        { label: 'Name', value: 'Name' },
+        { label: 'Address', value: 'Address' },
+        { label: 'Cnic', value: 'Cnic' },
+        { label: 'PhoneNumber', value: 'Phone Number' },
+        { label: 'Email', value: 'Email' },
+    ]
+
+    function handleCheckboxes(name, value, key) {
+        // setFilterCheckboxes({ ...filterCheckboxes, [name]: value })
+    }
 
     return (
         <div>

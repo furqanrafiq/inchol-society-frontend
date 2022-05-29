@@ -17,3 +17,8 @@ h3,h4,p{
 .small-cards .ant-card-body{
     padding: 0px;
 }
+
+.gallery-image{
+    height: 400px;
+    border-radius: 10px;
+}

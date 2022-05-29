@@ -14,7 +14,9 @@ import UpdateLedger from '../views/UpdateLedger';
 import AddLedger from '../views/AddLedger';
 import AllNph from '../views/Member/AllNph';
 import MSI from '../views/MSI';
-// import logo from '../incholi2-01.png'
+import Mursaleen from '../views/Mursaleen';
+import logo from '../incholi.png'
+import CreateAnnouncement from '../views/CreateAnnouncement';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -24,10 +26,10 @@ const MemberSider = () => {
     return (
         <div>
             <Layout className='left-sider'>
-                <Header className="header" style={{ display: 'flex', alignItems: 'center' }}>
+                <Header className="header" style={{ display: 'flex', alignItems: 'center',padding:'40px' }}>
                     {/* <div className="logo" /> */}
-                    {/* <img src={logo} height="50px" width="50px" /> */}
-                    <h3 style={{ color: 'white' }}>Inchauli Society</h3>
+                    <img src={logo} height="100px" width="100px" />
+                    <h3 style={{ color: 'white' }}>Inchauli cooperative housing society</h3>
                     {/* <Menu theme="light" mode="horizontal">
                         <Menu.Item key="1">nav 1</Menu.Item>
                         <Menu.Item key="2">nav 2</Menu.Item>
@@ -97,6 +99,16 @@ const MemberSider = () => {
                                     MSI
                                 </NavLink>
                             </Menu.Item>
+                            <Menu.Item key="/create-announcement">
+                                <NavLink to="/create-announcement">
+                                    Edit Dashboard
+                                </NavLink>
+                            </Menu.Item>
+                            {/* <Menu.Item key="/munni">
+                                <NavLink to="/munni">
+                                    Mursaleen
+                                </NavLink>
+                            </Menu.Item> */}
                             {/* <Menu.Item key="/add-plot">
                                     <NavLink to="/add-plot">
                                         Add plot
@@ -141,6 +153,7 @@ const MemberSider = () => {
                                 <Route path="add-ledger" element={<AddLedger />} />
                                 <Route path="all-nph" element={<AllNph />} />
                                 <Route path="msi" element={<MSI />} />
+                                <Route path="create-announcement" element={<CreateAnnouncement />} />
                             </Routes>
                         </Content>
                     </Layout>

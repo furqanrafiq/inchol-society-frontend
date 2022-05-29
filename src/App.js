@@ -15,6 +15,8 @@ import UpdateLedger from './views/UpdateLedger';
 import AddLedger from './views/AddLedger';
 import AllNph from './views/Member/AllNph';
 import MSI from './views/MSI';
+import Mursaleen from './views/Mursaleen';
+import CreateAnnouncement from './views/CreateAnnouncement';
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
           <Route path="add-ledger" element={<AddLedger />} />
           <Route path="all-nph" element={<AllNph />} />
           <Route path="msi" element={<MSI />} />
+          <Route path="create-announcement" element={<CreateAnnouncement />} />
         </Route>
       </Routes>
     </div>

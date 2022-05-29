@@ -17,6 +17,7 @@ const MSI = () => {
     const [memberDetails, setMemberDetails] = useState({});
     const [financeDetails, setFinanceDetails] = useState({});
     const [loading, setLoading] = useState(false)
+    const [pdfHeading, setPdfHeading] = useState();
     const [filterCheckboxes, setFilterCheckboxes] = useState({
         member_no: true,
         file_no: true,
@@ -87,17 +88,6 @@ const MSI = () => {
     // ]
 
     const printDocument = () => {
-        // html2canvas(document.getElementById('div-to-print')).then(function (canvas) {
-        //     var wid: number
-        //     var hgt: number
-        //     var img = canvas.toDataURL("image/png", wid = canvas.width, hgt = canvas.height);
-        //     var hratio = hgt / wid
-        //     var doc = new jsPDF('portrait', 'pt', 'a4');
-        //     var width = doc.internal.pageSize.width;
-        //     var height = width * hratio
-        //     doc.addImage(img, 'JPEG', 0, 0, width, height);
-        //     doc.save('Member-Ledger-Details.pdf');
-        // });
         window.html2canvas = html2canvas;
         var doc = new jsPDF({
             orientation: "landscape",
@@ -107,11 +97,8 @@ const MSI = () => {
         });
 
         var content = document.getElementById("div-to-print");
-        // console.log("content", content);
-        // console.log("document.body", document.body);
         doc.html(content, {
             callback: function (doc) {
-                // console.log("in callback");
                 doc.save('Member-Ledger-Details.pdf');
             }
         });
@@ -169,7 +156,12 @@ const MSI = () => {
                                 }
                             </Panel>
                         </Collapse>
+                        <Input onChange={(e) => setPdfHeading(e.target.value)} className="mt-2 w-50" placeholder='Enter report title'/>
                         <div id="div-to-print">
+                            <div style={{ textAlign: 'center',marginTop:'10px'}}>
+                                <h2>Inchauli cooperative housing society</h2>
+                                <h2>{pdfHeading}</h2>
+                            </div>
                             <h4 className='mt-3'>Member Details:</h4>
                             <table class="table mt-2" style={{ background: 'white', overflowY: 'scroll' }}>
                                 <thead>

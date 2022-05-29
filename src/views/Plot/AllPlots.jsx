@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Tag, Space, Input, Row } from 'antd';
+import { Table, Checkbox, Tag, Space, Input, Row, Button, Collapse } from 'antd';
 import {
     EditOutlined,
     LoadingOutlined,
@@ -12,14 +12,51 @@ import axios from 'axios';
 import { URI } from '../../helper';
 import { Spin } from 'antd';
 import debounce from "lodash.debounce";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
+import { CSVLink } from 'react-csv';
+import moment from 'moment'
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Search } = Input;
+const { Panel } = Collapse;
 
 const AllPlots = () => {
     const [plots, setPlots] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [filteredPlots, setFilteredPlots] = useState([]);
+    const [filterCheckboxes, setFilterCheckboxes] = useState({
+        member_no: true,
+        file_no: true,
+        plot_no: true,
+        name: true,
+        address: true,
+        cnic: true,
+        phoneNumber: true,
+        email: true
+    })
+
+    const [memberHeaders, setMemberHeaders] = useState([
+        { label: "S.No", key: "index" },
+        { key: 'member_no', label: 'M/S No.' },
+        { key: 'file_no', label: 'Volume No.' },
+        { key: 'plot_no', label: 'plot No.' },
+        { key: 'name', label: 'Name' },
+        { key: 'address', label: 'Address' },
+        { key: 'cnic', label: 'Cnic' },
+        { key: 'phoneNumber', label: 'Phone Number' },
+        { key: 'email', label: 'Email' },
+    ]);
+
+    const memberOptions = [
+        { label: 'M/S No.', value: 'member_no' },
+        { label: 'Volume No.', value: 'file_no' },
+        { label: 'plot No.', value: 'plot_no' },
+        { label: 'Name', value: 'name' },
+        { label: 'Address', value: 'address' },
+        { label: 'Cnic', value: 'cnic' },
+        { label: 'Phone Number', value: 'phoneNumber' },
+        { label: 'Email', value: 'email' },
+    ]
 
     useEffect(() => {
         getAllPlots()
@@ -89,6 +126,18 @@ const AllPlots = () => {
             ),
         },
     ];
+
+    function handleCheckboxes(name, value, key) {
+        setFilterCheckboxes({ ...filterCheckboxes, [key]: value })
+        if (value == true) {
+            setMemberHeaders([...memberHeaders, { label: name, key: key }])
+        } else {
+            var filtered = memberHeaders.filter((value => {
+                return value.key != key;
+            }));
+            setMemberHeaders(filtered)
+        }
+    }
 
     const data = plots?.map((plot, index) => {
         return (
@@ -165,6 +214,23 @@ const AllPlots = () => {
         }
     }, 500);
 
+    const printDocument = () => {
+        window.html2canvas = html2canvas;
+        var doc = new jsPDF({
+            orientation: "landscape",
+            unit: "pt",
+            putOnlyUsedFonts: true,
+            format: 'a3',
+        });
+
+        var content = document.getElementById("div-to-print");
+        doc.html(content, {
+            callback: function (doc) {
+                doc.save('All-Plots.pdf');
+            }
+        });
+    };
+
     return (
         <div>
             <h5>All plots</h5>
@@ -194,11 +260,112 @@ const AllPlots = () => {
                     onChange={(e) => onSearchByFileNumber(e.target.value)}
                     style={{ width: 200 }}
                 />
+                <CSVLink
+                    headers={memberHeaders}
+                    data={data != undefined ? data : ''}
+                    filename={'Plot Details' + moment.now()} title="Inchauli Society"
+                >
+                    <Button className="mr-3" style={{ color: 'white', background: '#28a745', borderColor: '#28a745' }}>Export CSV</Button>
+                </CSVLink>
             </div>
+            <Collapse className='mt-3'>
+                <Panel header="Filter" key="1">
+                    <p style={{ fontWeight: '500' }}>Plot Checkboxes:</p>
+                    {
+                        memberOptions.map(option => {
+                            return (
+                                <Checkbox defaultChecked onChange={(e) => handleCheckboxes(option.label, e.target.checked, option.value)} value={option.value}>{option.label}</Checkbox>
+                            )
+                        })
+                    }
+                </Panel>
+            </Collapse>
             {
                 loading == true ?
                     <Spin indicator={antIcon} /> :
-                    <Table className='mt-3' columns={columns} dataSource={data} />
+                    <div id="div-to-print">
+                        <table class="table mt-2" style={{ background: 'white', overflowY: 'scroll' }}>
+                            <thead>
+                                <tr style={{ textAlign: 'center' }}>
+                                    {
+                                        filterCheckboxes.member_no == true &&
+                                        <th scope="col">M/S No.</th>
+                                    }
+                                    {
+                                        filterCheckboxes.file_no == true &&
+                                        <th scope="col">Volume No.</th>
+                                    }
+                                    {
+                                        filterCheckboxes.plot_no == true &&
+                                        <th scope="col">Plot No.</th>
+                                    }
+                                    {
+                                        filterCheckboxes.name == true &&
+                                        <th scope="col">Name</th>
+                                    }
+                                    {
+                                        filterCheckboxes.address == true &&
+                                        <th scope="col">Address</th>
+                                    }
+                                    {
+                                        filterCheckboxes.cnic == true &&
+                                        <th scope="col">Cnic</th>
+                                    }
+                                    {
+                                        filterCheckboxes.phoneNumber == true &&
+                                        <th scope="col">Phone Number</th>
+                                    }
+                                    {
+                                        filterCheckboxes.email == true &&
+                                        <th scope="col">Email</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    plots?.map(plot => {
+                                        return (
+                                            <tr style={{ textAlign: 'center' }}>
+                                                {
+                                                    filterCheckboxes.member_no == true &&
+                                                    <td>{plot.member_no}</td>
+                                                }
+
+                                                {
+                                                    filterCheckboxes.file_no == true &&
+                                                    <td>{(plot.file_no != '' || plot.file_no != null) ? plot.file_no : '-'}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.plot_no == true &&
+                                                    <td>{plot.plot_no}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.name == true &&
+                                                    <td>{plot.name}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.address == true &&
+                                                    <td>{plot.address}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.cnic == true &&
+                                                    <td>{plot.cnic}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.phoneNumber == true &&
+                                                    <td>{plot.phone}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.email == true &&
+                                                    <td>{plot.email}</td>
+                                                }
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
             }
         </div>
     )
