@@ -17,6 +17,7 @@ import MSI from '../views/MSI';
 import Mursaleen from '../views/Mursaleen';
 import logo from '../incholi.png'
 import CreateAnnouncement from '../views/CreateAnnouncement';
+import AllcommitteeMembers from '../views/AllcommitteeMembers';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -26,10 +27,10 @@ const MemberSider = () => {
     return (
         <div>
             <Layout className='left-sider'>
-                <Header className="header" style={{ display: 'flex', alignItems: 'center',padding:'40px' }}>
+                <Header className="header" style={{ display: 'flex', alignItems: 'center', padding: '40px' }}>
                     {/* <div className="logo" /> */}
                     <img src={logo} height="100px" width="100px" />
-                    <h3 style={{ color: 'white' }}>Inchauli cooperative housing society</h3>
+                    <h3 style={{ color: 'white' }}>Inchauli Cooperative Housing Society</h3>
                     {/* <Menu theme="light" mode="horizontal">
                         <Menu.Item key="1">nav 1</Menu.Item>
                         <Menu.Item key="2">nav 2</Menu.Item>
@@ -37,12 +38,14 @@ const MemberSider = () => {
                     </Menu> */}
                 </Header>
                 <Layout>
-                    <Sider width={200} className="site-layout-background">
+                    <Sider width={200} className="site-layout-backgroundx">
                         <Menu
                             mode="inline"
                             defaultSelectedKeys={[location.pathname]}
                             defaultOpenKeys={['/member']}
                             style={{ height: '100%', borderRight: 0 }}
+                            theme='dark'
+                            className='project-sider'
                         >
                             {/* <SubMenu key="/member" icon={<UserOutlined />} title="Members">
                                 <Menu.Item key="/all-members">
@@ -96,7 +99,7 @@ const MemberSider = () => {
                             </Menu.Item>
                             <Menu.Item key="/msi">
                                 <NavLink to="/msi">
-                                    MSI
+                                    MIS
                                 </NavLink>
                             </Menu.Item>
                             <Menu.Item key="/create-announcement">
@@ -154,6 +157,7 @@ const MemberSider = () => {
                                 <Route path="all-nph" element={<AllNph />} />
                                 <Route path="msi" element={<MSI />} />
                                 <Route path="create-announcement" element={<CreateAnnouncement />} />
+                                <Route path="committee-members" element={<AllcommitteeMembers />} />
                             </Routes>
                         </Content>
                     </Layout>

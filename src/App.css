@@ -1,24 +1,35 @@
-.left-sider .ant-layout{
-height: 100vh;
+.left-sider .ant-layout {
+    height: 100vh;
 }
+
 body {
     font-family: 'Poppins' !important;
 }
 
-h3,h4,p{
+h3,
+h4,
+p {
     margin-bottom: 0px !important;
 }
 
-.static-card{
+.static-card {
     background: white;
     padding: 25px 5px;
 }
 
-.small-cards .ant-card-body{
+.small-cards .ant-card-body {
     padding: 0px;
 }
 
-.gallery-image{
-    height: 400px;
+.gallery-image {
+    height: 280px;
     border-radius: 10px;
+}
+
+.project-sider .ant-menu-title-content a {
+    color: white !important;
+}
+
+.project-sider .ant-menu-submenu{
+    color: white !important;
 }

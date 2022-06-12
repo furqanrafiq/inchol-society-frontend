@@ -254,8 +254,8 @@ const AllMembers = () => {
             {
                 loading == true ?
                     <Spin indicator={antIcon} /> :
-                    <table class="table mt-2" style={{ background: 'white' }}>
-                        <thead>
+                    <table class="table mt-2 table-striped" style={{ background: 'white' }}>
+                        <thead style={{ background: '#001529', color: 'white' }}>
                             <tr style={{ textAlign: 'center' }}>
                                 <th scope="col">#</th>
                                 {

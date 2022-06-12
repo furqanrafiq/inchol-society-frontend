@@ -17,6 +17,7 @@ import AllNph from './views/Member/AllNph';
 import MSI from './views/MSI';
 import Mursaleen from './views/Mursaleen';
 import CreateAnnouncement from './views/CreateAnnouncement';
+import AllcommitteeMembers from './views/AllcommitteeMembers';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="all-nph" element={<AllNph />} />
           <Route path="msi" element={<MSI />} />
           <Route path="create-announcement" element={<CreateAnnouncement />} />
+          <Route path="committee-members" element={<AllcommitteeMembers />} />
         </Route>
       </Routes>
     </div>

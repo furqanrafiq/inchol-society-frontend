@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { HomeOutlined, AreaChartOutlined } from '@ant-design/icons';
+import { HomeOutlined, AreaChartOutlined, ExpandAltOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Carousel } from 'antd'
 import axios from 'axios';
 import { link, URI } from '../../helper';
+import { Link } from 'react-router-dom';
 const MemberDashboard = () => {
 
-    console.log(link)
     const [announcements, setAnnouncements] = useState([])
     const [galleryImages, setGalleryImages] = useState([])
-    // console.log(galleryImages)
+    const [committeeMembers, setCommitteeMembers] = useState([])
 
     function getAnnouncements() {
         axios.get(URI + 'getAllAnnouncements')
@@ -20,14 +20,21 @@ const MemberDashboard = () => {
     function getGalleryImages() {
         axios.get(URI + 'show-gallery')
             .then(resp => {
-                console.log(resp.data.response.detail)
                 setGalleryImages(resp.data.response.detail)
+            });
+    }
+
+    function getCommitteeMembers() {
+        axios.get(URI + 'get-committe-member')
+            .then(resp => {
+                setCommitteeMembers(resp.data.response.detail)
             });
     }
 
     useEffect(() => {
         getAnnouncements()
         getGalleryImages()
+        getCommitteeMembers()
     }, [])
 
     return (
@@ -95,6 +102,17 @@ const MemberDashboard = () => {
                         </Row>
                     </Card>
                 </Col>
+                <Col md={6}>
+                    <Carousel autoplay arrows={true}>
+                        {
+                            galleryImages?.map(gallery => {
+                                return (
+                                    <img className='gallery-image' src={link + gallery.filename} style={{ height: '300px', width: '300px', borderRadius: '10px' }} />
+                                )
+                            })
+                        }
+                    </Carousel>
+                </Col>
             </Row>
             <Row gutter={16} className='mt-4'>
                 <Col span={4}>
@@ -150,9 +168,19 @@ const MemberDashboard = () => {
             </Row>
             <Row gutter={16} className='mt-4'>
                 <Col span={7} className="mr-3" style={{ border: '1px solid lightgray', borderRadius: '10px', padding: '10px', background: 'white' }}>
-                    <p style={{ fontWeight: 'bold' }}>Committee Members:</p>
+                    <div className='d-flex align-items-center justify-content-between'>
+                        <p style={{ fontWeight: 'bold' }}>Committee Members:</p>
+                        <Link to="/committee-members"><ExpandAltOutlined /></Link>
+                    </div>
                     <ul className='mt-2'>
-                        <li>Mr. Arif Mansoor S/O Shams-ul-Hassan (General Secretary)</li>
+                        {
+                            committeeMembers?.map(committee => {
+                                return (
+                                    <li>{committee.name}</li>
+                                )
+                            })
+                        }
+                        {/* <li>Mr. Arif Mansoor S/O Shams-ul-Hassan (General Secretary)</li>
                         <li>Mr. Nasiruddin Mehmood S/O Naziruddin Mehmood (Chairman)</li>
                         <li>Mr. Sohail Iftikhar S/O Iftikhar Hussain (Finance Secretary)</li>
                         <li>Mr. Muhammad Zubair S/O Ruknuddin</li>
@@ -160,7 +188,7 @@ const MemberDashboard = () => {
                         <li>Mr. Salman Siddiqui S/O Dilshad Ali</li>
                         <li>Mr. Shaikh Athar Nawab S/O Nawab ul Hassan</li>
                         <li>Dr. Fahim Uddin S/O Muhammad Shamsuddin</li>
-                        <li>Syed Muhammad Zeeshan Ahmed S/O Syed Muhammad Ibne Hussain Sabir</li>
+                        <li>Syed Muhammad Zeeshan Ahmed S/O Syed Muhammad Ibne Hussain Sabir</li> */}
                     </ul>
                 </Col>
                 <Col span={7} className="mr-3" style={{ border: '1px solid lightgray', borderRadius: '10px', padding: '10px', background: 'white' }}>
@@ -186,18 +214,6 @@ const MemberDashboard = () => {
                     }
                 </Col>
             </Row>
-
-            <Col md={24} className="mt-4">
-                <Carousel autoplay arrows={true}>
-                    {
-                        galleryImages?.map(gallery => {
-                            return (
-                                <img className='gallery-image' src={link + gallery.filename} style={{ height: '300px', width: '300px', borderRadius: '10px' }} />
-                            )
-                        })
-                    }
-                </Carousel>
-            </Col>
         </div>
     )
 }

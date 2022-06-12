@@ -272,8 +272,8 @@ const AllNph = () => {
             {
                 loading == true ?
                     <Spin indicator={antIcon} /> :
-                    <table class="table mt-2" style={{ background: 'white', overflowY: 'scroll' }}>
-                        <thead>
+                    <table class="table mt-2 table-striped" style={{ background: 'white', overflowY: 'scroll' }}>
+                        <thead style={{ background: '#001529', color: 'white' }}>
                             <tr style={{ textAlign: 'center' }}>
                                 {
                                     filterCheckboxes.member_no == true &&

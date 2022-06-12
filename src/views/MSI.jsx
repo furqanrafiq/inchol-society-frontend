@@ -107,7 +107,7 @@ const MSI = () => {
     return (
         <div>
             <div className='d-flex align-items-center justify-content-between'>
-                <h5>MSI</h5>
+                <h5>MIS</h5>
                 <Button style={{ color: 'white', backgroundColor: 'red', borderColor: 'red' }} onClick={() => printDocument()}>Print PDF</Button>
             </div>
             <div className='d-flex gap-4'>
@@ -159,12 +159,12 @@ const MSI = () => {
                         <Input onChange={(e) => setPdfHeading(e.target.value)} className="mt-2 w-50" placeholder='Enter report title'/>
                         <div id="div-to-print">
                             <div style={{ textAlign: 'center',marginTop:'10px'}}>
-                                <h2>Inchauli cooperative housing society</h2>
+                                <h2>Inchauli Cooperative Housing Society</h2>
                                 <h2>{pdfHeading}</h2>
                             </div>
                             <h4 className='mt-3'>Member Details:</h4>
-                            <table class="table mt-2" style={{ background: 'white', overflowY: 'scroll' }}>
-                                <thead>
+                            <table class="table mt-2 table-striped" style={{ background: 'white', overflowY: 'scroll' }}>
+                                <thead style={{ background: '#001529', color: 'white' }}>
                                     <tr style={{ textAlign: 'center' }}>
                                         {
                                             filterCheckboxes.member_no == true &&
@@ -246,8 +246,8 @@ const MSI = () => {
                                         <p>Plot Number : {memberDetails?.plot_no}</p>
                                         <p>Volume Number : {memberDetails?.file_no}</p>
                                     </div>
-                                    <table class="table mt-2" style={{ background: 'white' }}>
-                                        <thead>
+                                    <table class="table mt-2 table-striped" style={{ background: 'white' }}>
+                                        <thead style={{ background: '#001529', color: 'white' }}>
                                             <tr style={{ textAlign: 'center' }}>
                                                 <th scope="col">#</th>
                                                 {
