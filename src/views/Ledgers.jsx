@@ -243,7 +243,39 @@ const Ledgers = () => {
                     value={volumeNo}
                 />
             </div>
-            <Table className='mt-3' columns={columns} dataSource={data} />
+            {/* <Table className='mt-3 ledger-table' columns={columns} dataSource={data} /> */}
+
+
+            <table class="table mt-3" style={{ background: 'white' }}>
+                <thead style={{ background: '#001529', color: 'white' }}>
+                    <tr style={{ textAlign: 'center' }}>
+                        <th scope="col">#</th>
+                        <th scope="col">Volume No.</th>
+                        <th scope="col">Plot No.</th>
+                        <th scope="col">M/S No.</th>
+                        <th scope="col">Name/Allottee</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Owner No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        memberDetails?.map((plot, index) => {
+                            return (
+                                <tr style={{ textAlign: 'center' }}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{plot.file_no}</td>
+                                    <td>{(plot.plot_no != '' || plot.plot_no != null) ? plot.plot_no : '-'}</td>
+                                    <td>{plot.member_no}</td>
+                                    <td>{plot.name}</td>
+                                    <td>{plot.address}</td>
+                                    <td>{plot.owner_no}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
             <div className='d-flex align-items-center justify-content-between'>
                 <div>
                     <h5 className='mt-3' style={{ fontWeight: 'bold' }}>Ledger Details</h5>
@@ -270,8 +302,8 @@ const Ledgers = () => {
                 <p style={{ fontSize: '18px', fontWeight: '500' }}>Total Amount: {ledgerTotal}</p>
             }
 
-            <table class="table mt-3" style={{ background: 'white' }}>
-                <thead>
+            <table class="table mt-3 table-striped" style={{ background: 'white' }}>
+                <thead style={{ background: '#001529', color: 'white' }}>
                     <tr style={{ textAlign: 'center' }}>
                         <th scope="col">#</th>
                         <th scope="col">Volume No.</th>
@@ -308,21 +340,6 @@ const Ledgers = () => {
                             )
                         })
                     }
-                    {/* <tr>
-                        <th scope="row">-</th>
-                        <td>{lastItem?.file_no}</td>
-                        <td>{(lastItem?.plot_no != '' || lastItem?.plot_no != null) ? lastItem?.plot_no : '-'}</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>
-                            <Space size="middle">
-                                <Link to={`/add-ledger/${lastItem?.file_no}/${lastItem?.plot_no}`} style={{ color: 'blue' }}>Add new</Link>
-                            </Space>
-                        </td>
-                    </tr> */}
                 </tbody>
             </table>
             {/* <Table className='mt-3' columns={ledger_columns} dataSource={ledger_data} /> */}
