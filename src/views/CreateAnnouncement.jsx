@@ -2,7 +2,7 @@ import { Button, Col, Form, Input, Row } from 'antd'
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
-import { URI } from '../helper';
+import { URI, link } from '../helper';
 import { UserDeleteOutlined } from '@ant-design/icons'
 
 const { TextArea } = Input;
@@ -12,6 +12,9 @@ const CreateAnnouncement = () => {
     const [galleryImages, setGalleryImages] = useState([])
     const [committeeMembers, setCommitteeMembers] = useState({})
     const [allMembers, setAllMembers] = useState([])
+    const [gallery, setGallery] = useState([]);
+
+
 
     function onFinish(values) {
         axios.post(URI + 'create-announcement', values)
@@ -66,6 +69,7 @@ const CreateAnnouncement = () => {
                         text: 'Successful',
                         icon: 'success'
                     })
+                    getGallery()
                 }
             })
     }
@@ -92,8 +96,16 @@ const CreateAnnouncement = () => {
             });
     }
 
+    function getGallery() {
+        axios.get(URI + 'show-gallery')
+            .then(resp => {
+                setGallery(resp.data.response.detail)
+            });
+    }
+
     useEffect(() => {
         getCommitteeMembers()
+        getGallery()
     }, [])
 
     function deleteMember(id) {
@@ -108,6 +120,22 @@ const CreateAnnouncement = () => {
                         icon: 'success'
                     })
                     getCommitteeMembers()
+                }
+            });
+    }
+
+    function deleteGallery(id) {
+        axios.post(URI + 'delete-picture', {
+            id: id
+        })
+            .then(resp => {
+                if (resp.data.status == 200) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Deleted Successfully',
+                        icon: 'success'
+                    })
+                    getGallery()
                 }
             });
     }
@@ -159,6 +187,19 @@ const CreateAnnouncement = () => {
                     <Button className='mt-2' onClick={() => addGallery()}>
                         Add
                     </Button>
+                    <Row className='mt-2'>
+                        {
+                            gallery?.length > 0 &&
+                            gallery?.map(img => {
+                                return (
+                                    <div>
+                                        <span style={{ position: 'relative', left: '90px', top: '-30px', background: 'white', borderRadius: '50%', padding: '0px 6px', cursor: 'pointer' }} onClick={() => deleteGallery(img.id)}>x</span>
+                                        <img src={link + img.filename} style={{ height: '100px', width: '100px', marginRight: '10px' }} />
+                                    </div>
+                                )
+                            })
+                        }
+                    </Row>
                 </Col>
             </Row>
             <div className='mt-3'>

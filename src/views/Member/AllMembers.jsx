@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Spin, Input, Table, Space, Button, Popover, Collapse, Checkbox } from 'antd';
 import {
     EditOutlined,
@@ -11,7 +11,6 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { URI } from '../../helper';
 import debounce from "lodash.debounce";
-import { useEffect } from 'react/cjs/react.development';
 import moment from 'moment'
 import { CSVLink } from 'react-csv';
 
@@ -25,10 +24,6 @@ const AllMembers = () => {
     const [loading, setLoading] = useState(false);
     const [filteredPlots, setFilteredPlots] = useState([]);
 
-    useEffect(() => {
-        getAllPlots()
-    }, [])
-
     function getAllPlots() {
         setLoading(true)
         axios.get(URI + `get-all-plots`)
@@ -37,6 +32,10 @@ const AllMembers = () => {
                 setLoading(false)
             });
     }
+
+    useEffect(() => {
+        getAllPlots()
+    }, [])
 
 
     const columns = [

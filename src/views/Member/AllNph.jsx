@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Tag, Space, Input, Row, Collapse, Button, Checkbox } from 'antd';
 import {
     EditOutlined,
@@ -12,7 +12,6 @@ import axios from 'axios';
 import { URI } from '../../helper';
 import { Spin } from 'antd';
 import debounce from "lodash.debounce";
-import { useEffect } from 'react/cjs/react.development';
 import { CSVLink } from 'react-csv';
 import moment from 'moment'
 
@@ -55,10 +54,6 @@ const AllNph = () => {
         { label: 'Email', value: 'email' },
     ]
 
-    useEffect(() => {
-        getAllPlots()
-    }, [])
-
     function getAllPlots() {
         setLoading(true)
         axios.get(URI + `get-all-nph-holders`)
@@ -67,6 +62,10 @@ const AllNph = () => {
                 setLoading(false)
             });
     }
+
+    useEffect(() => {
+        getAllPlots()
+    }, [])
 
     function handleCheckboxes(name, value, key) {
         setFilterCheckboxes({ ...filterCheckboxes, [key]: value })
