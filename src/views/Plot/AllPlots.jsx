@@ -28,6 +28,7 @@ const AllPlots = () => {
         member_no: true,
         file_no: true,
         plot_no: true,
+        owner_no: true,
         name: true,
         address: true,
         cnic: true,
@@ -40,6 +41,7 @@ const AllPlots = () => {
         { key: 'member_no', label: 'M/S No.' },
         { key: 'file_no', label: 'Volume No.' },
         { key: 'plot_no', label: 'plot No.' },
+        { key: 'owner_no', label: 'Owner No.' },
         { key: 'name', label: 'Name' },
         { key: 'address', label: 'Address' },
         { key: 'cnic', label: 'Cnic' },
@@ -51,6 +53,7 @@ const AllPlots = () => {
         { label: 'M/S No.', value: 'member_no' },
         { label: 'Volume No.', value: 'file_no' },
         { label: 'plot No.', value: 'plot_no' },
+        { label: 'Owner No.', value: 'owner_no' },
         { label: 'Name', value: 'name' },
         { label: 'Address', value: 'address' },
         { label: 'Cnic', value: 'cnic' },
@@ -300,6 +303,10 @@ const AllPlots = () => {
                                         <th scope="col">Plot No.</th>
                                     }
                                     {
+                                        filterCheckboxes.owner_no == true &&
+                                        <th scope="col">Owner No.</th>
+                                    }
+                                    {
                                         filterCheckboxes.name == true &&
                                         <th scope="col">Name</th>
                                     }
@@ -338,6 +345,10 @@ const AllPlots = () => {
                                                 {
                                                     filterCheckboxes.plot_no == true &&
                                                     <td>{plot.plot_no}</td>
+                                                }
+                                                {
+                                                    filterCheckboxes.owner_no == true &&
+                                                    <td>{plot.owner_no}</td>
                                                 }
                                                 {
                                                     filterCheckboxes.name == true &&

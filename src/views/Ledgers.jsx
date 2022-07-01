@@ -68,7 +68,7 @@ const Ledgers = () => {
 
     useEffect(() => {
         if (financeDetails?.length > 0) {
-            var sum = financeDetails?.map(fin => fin.Amount)
+            var sum = financeDetails?.map(fin => parseInt(fin.Amount))
             var total = sum.reduce(function (a, b) {
                 return a + b;
             }, 0);

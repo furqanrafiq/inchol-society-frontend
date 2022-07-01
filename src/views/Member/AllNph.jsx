@@ -324,19 +324,19 @@ const AllNph = () => {
                                             }
                                             {
                                                 filterCheckboxes.address == true &&
-                                                <td>{plot.address}</td>
+                                                <td>{(plot.address != '' || plot.address != null) ? plot.address : '-'}</td>
                                             }
                                             {
                                                 filterCheckboxes.cnic == true &&
-                                                <td>{plot.cnic}</td>
+                                                <td>{(plot.cnic != '' || plot.cnic != null) ? plot.cnic : '-'}</td>
                                             }
                                             {
                                                 filterCheckboxes.phoneNumber == true &&
-                                                <td>{plot.phone}</td>
+                                                <td>{(plot.phoneNumber != '' || plot.phoneNumber != null) ? plot.phoneNumber : '-'}</td>
                                             }
                                             {
                                                 filterCheckboxes.email == true &&
-                                                <td>{plot.email}</td>
+                                                <td>{(plot.email != "" || plot.email != null) ? plot.email : '-'}</td>
                                             }
                                         </tr>
                                     )
